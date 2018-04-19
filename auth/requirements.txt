@@ -4,4 +4,3 @@ Flask-JWT
 Flask-SQLAlchemy
 pymysql
 PyJWT==1.4.2
-pycurl --install-option="--with-openssl"

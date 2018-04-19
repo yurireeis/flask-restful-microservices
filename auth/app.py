@@ -1,9 +1,12 @@
 from flask import Flask
+from datetime import timedelta
 from flask_jwt import JWT
+from flask_restful import Api
 from os import getenv
 from security import authenticate, identity
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = getenv('DATABASE_URL', 'db.tdc')
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(days=1)
 app.config['JWT_AUTH_HEADER_PREFIX'] = getenv('PREFIX', 'Bearer ')
 app.config['SECRET_KEY'] = getenv('SECRET', 'tdc')
@@ -21,6 +24,5 @@ def customized_response_handler(access_token, identity):
     payload['access_token'] = access_token.decode('utf-8')
     return jsonify(payload)
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=80)
