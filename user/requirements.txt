@@ -1,3 +1,5 @@
+werkzeug
+Flask-RESTful
 Flask-JWT
 Flask-SQLAlchemy
 pymysql

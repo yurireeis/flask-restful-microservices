@@ -6,9 +6,38 @@ services:
         container_name: auth.tdc
         restart: unless-stopped
         ports:
-            - "81:81"
+            - "81:80"
+        environment:
+            - DB_USER=root
+            - DB_PASS=tdc
+            - DB_HOST=db.tdc
+            - DB_NAME=tdc
+            - PREFIX=Bearer
+            - SECRET=tdc
         volumes:
-            - /home/yreis/projects/flask-restful-microservices/auth:/usr/src/app
+            - "./auth:/usr/src/app"
+        depends_on:
+            - db
+        networks:
+            - example_net
+
+    user:
+        build: ./user
+        container_name: user.tdc
+        restart: unless-stopped
+        ports:
+            - "82:80"
+        environment:
+            - DB_USER=root
+            - DB_PASS=tdc
+            - DB_HOST=db.tdc
+            - DB_NAME=tdc
+            - PREFIX=Bearer
+            - SECRET=tdc
+        volumes:
+            - "./user:/usr/src/app"
+        depends_on:
+            - db
         networks:
             - example_net
 
